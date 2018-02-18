@@ -11,12 +11,12 @@ class AcceptanceTest {
     @Test
     @Ignore
     fun acceptanceTest() {
-        val account = Account("Emanuele")
         val printer = mockk<Printer>(relaxed = true)
+        val account = Account("Emanuele", Statements(printer))
         account.deposit(Amount(1000), of(2012, 1, 10))
         account.deposit(Amount(2000), of(2012, 1, 13))
         account.withdrawal(Amount(500), of(2012, 1, 14))
-        account.printStatement(printer)
+        account.printStatement()
         verifyOrder {
             printer.print(Statement(Amount(-500), of(2012, 1, 14), Amount(2500)))
             printer.print(Statement(Amount(2000), of(2012, 1, 13), Amount(3000)))
